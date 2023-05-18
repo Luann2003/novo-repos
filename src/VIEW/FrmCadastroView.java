@@ -24,6 +24,7 @@ public class FrmCadastroView extends JFrame {
 	private JPanel contentPane;
 	private JTextField textusuario;
 	private JTextField textSenha;
+	private JTextField textEmail;
 
 	/**
 	 * Launch the application.
@@ -53,21 +54,21 @@ public class FrmCadastroView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("usuario");
-		lblNewLabel.setBounds(23, 35, 169, 14);
+		JLabel lblNewLabel = new JLabel("Usuário");
+		lblNewLabel.setBounds(23, 70, 169, 14);
 		contentPane.add(lblNewLabel);
 		
 		textusuario = new JTextField();
-		textusuario.setBounds(23, 63, 169, 20);
+		textusuario.setBounds(23, 95, 169, 20);
 		contentPane.add(textusuario);
 		textusuario.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Senha");
-		lblNewLabel_1.setBounds(23, 97, 46, 14);
+		lblNewLabel_1.setBounds(23, 126, 46, 14);
 		contentPane.add(lblNewLabel_1);
 		
 		textSenha = new JTextField();
-		textSenha.setBounds(23, 122, 169, 20);
+		textSenha.setBounds(23, 151, 169, 20);
 		contentPane.add(textSenha);
 		textSenha.setColumns(10);
 		
@@ -78,24 +79,36 @@ public class FrmCadastroView extends JFrame {
 				cadastro();
 			}
 		});
-		btnCadastro.setBounds(54, 167, 89, 23);
+		btnCadastro.setBounds(54, 198, 89, 23);
 		contentPane.add(btnCadastro);
+		
+		JLabel lblNewLabel_2 = new JLabel("Email");
+		lblNewLabel_2.setBounds(23, 23, 46, 14);
+		contentPane.add(lblNewLabel_2);
+		
+		textEmail = new JTextField();
+		textEmail.setBounds(22, 48, 170, 20);
+		contentPane.add(textEmail);
+		textEmail.setColumns(10);
 	}
 	public void cadastro() {
 		
-		 try {
-		        CadastroDAO cadastroDAO;
-		        UsuarioDTO objusuario = new UsuarioDTO();
-		        objusuario.setEmail_usuario(textusuario.getText());
-		        objusuario.setSenha_usuario(textSenha.getText());
-		        
-		  
-		        
-		    } catch (SQLException erro) {
-		        JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + erro.getMessage());
-		    }
-		}
+		String nome, senha, email;
+		
+		nome = textusuario.getText();
+		senha = textSenha.getText();
+		email = textEmail.getText();
+		
+		UsuarioDTO objusaDto = new UsuarioDTO();
+		objusaDto.setNome_usuario(nome);
+		objusaDto.setSenha_usuario(senha);
+		objusaDto.setEmail_usuario(email);
+		
+		CadastroDAO objcadastro = new CadastroDAO();
+		objcadastro.cadastrarFuncionario(objusaDto);
+			
+		
 		
 	
 	}
-
+}

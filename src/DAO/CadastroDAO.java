@@ -10,36 +10,28 @@ import javax.swing.JOptionPane;
 import DTO.UsuarioDTO;
 
 public class CadastroDAO {
-
-Connection conn;
 	
-	public void autenticacaoUsuario(UsuarioDTO objusuariodto) {
+	Connection conn;
+	PreparedStatement pstm;
+	public void cadastrarFuncionario(UsuarioDTO usuariodto) {
+		
+		String sql = "INSERT INTO usuario (usuario, senha, email) VALUES (?, ?, ?)";		
 		conn = new ConexaoDAO().conectaBD();
 		
 		try {
+			pstm = conn.prepareStatement(sql);
+			pstm.setString(1,usuariodto.getNome_usuario());
+			pstm.setString(2, usuariodto.getSenha_usuario());
+			pstm.setString(3, usuariodto.getEmail_usuario());
 			
-			String sql = "INSERT INTO gerenciamento_projetos (usuario, senha) VALUES (?, ?)";
-			PreparedStatement pstm = conn.prepareStatement(sql);
-			pstm.setString(1, objusuariodto.getEmail_usuario());
-			pstm.setString(2, objusuariodto.getSenha_usuario());
+			pstm.execute();
+			pstm.close();
 			
-			int linhas = pstm.executeUpdate();
-			if (linhas > 0) {
-		        System.out.println("Usuário cadastrado com sucesso!");
-		    } else {
-		        System.out.println("Falha ao cadastrar usuário.");
-		    }
-			
-			
-		} catch (SQLException erro) {
-			JOptionPane.showMessageDialog(null, "UsuarioDAO " + erro);
-			
+		} catch (Exception e) {
+		
+			JOptionPane.showMessageDialog(null, "CadastroDAO" + e);
 		}
-		
-		
 	}
-	
-
 	
 }
 
