@@ -18,13 +18,16 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
+import java.awt.Font;
+import java.awt.Color;
 
 public class FrmCadastroView extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textusuario;
-	private JTextField textSenha;
 	private JTextField textEmail;
+	private JPasswordField textSenha;
 
 	/**
 	 * Launch the application.
@@ -47,7 +50,7 @@ public class FrmCadastroView extends JFrame {
 	 */
 	public FrmCadastroView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 629, 463);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -55,43 +58,55 @@ public class FrmCadastroView extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Usuário");
-		lblNewLabel.setBounds(23, 70, 169, 14);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel.setBounds(264, 184, 169, 23);
 		contentPane.add(lblNewLabel);
 		
 		textusuario = new JTextField();
-		textusuario.setBounds(23, 95, 169, 20);
+		textusuario.setBounds(210, 218, 169, 23);
 		contentPane.add(textusuario);
 		textusuario.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Senha");
-		lblNewLabel_1.setBounds(23, 126, 46, 14);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_1.setBounds(264, 252, 65, 20);
 		contentPane.add(lblNewLabel_1);
 		
-		textSenha = new JTextField();
-		textSenha.setBounds(23, 151, 169, 20);
-		contentPane.add(textSenha);
-		textSenha.setColumns(10);
-		
-		JButton btnCadastro = new JButton("Cadastro");
+		JButton btnCadastro = new JButton("Cadastrar");
 		btnCadastro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				cadastro();
+				try {
+					cadastro();
+				} catch (SQLException e1) {
+					 e1.printStackTrace();
+				}
 			}
 		});
-		btnCadastro.setBounds(54, 198, 89, 23);
+		btnCadastro.setBounds(243, 314, 98, 23);
 		contentPane.add(btnCadastro);
 		
 		JLabel lblNewLabel_2 = new JLabel("Email");
-		lblNewLabel_2.setBounds(23, 23, 46, 14);
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel_2.setBounds(264, 119, 55, 23);
 		contentPane.add(lblNewLabel_2);
 		
 		textEmail = new JTextField();
-		textEmail.setBounds(22, 48, 170, 20);
+		textEmail.setBounds(210, 153, 170, 20);
 		contentPane.add(textEmail);
 		textEmail.setColumns(10);
+		
+		textSenha = new JPasswordField();
+		textSenha.setBounds(210, 283, 169, 20);
+		contentPane.add(textSenha);
+		
+		JLabel lblNewLabel_3 = new JLabel("Tela de Cadastro");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblNewLabel_3.setForeground(Color.RED);
+		lblNewLabel_3.setBounds(210, 58, 180, 50);
+		contentPane.add(lblNewLabel_3);
 	}
-	public void cadastro() {
+	public void cadastro() throws SQLException {
 		
 		String nome, senha, email;
 		
@@ -100,13 +115,28 @@ public class FrmCadastroView extends JFrame {
 		email = textEmail.getText();
 		
 		UsuarioDTO objusaDto = new UsuarioDTO();
+		
 		objusaDto.setNome_usuario(nome);
 		objusaDto.setSenha_usuario(senha);
 		objusaDto.setEmail_usuario(email);
 		
 		CadastroDAO objcadastro = new CadastroDAO();
-		objcadastro.cadastrarFuncionario(objusaDto);
-			
+		
+		objcadastro.verificarEmailExistente(email);
+		objcadastro.verificarUsuarioExistente(nome);
+		
+		if(!objcadastro.verificarEmailExistente (email) && !objcadastro.verificarUsuarioExistente(nome)) {
+			objcadastro.cadastrarFuncionario(objusaDto);
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Email ou Usuário já cadastradado");
+		}
+		
+		FrmLoginView telalogin = new FrmLoginView();
+		telalogin.setVisible(true);
+		dispose();
+		
+
 		
 		
 	

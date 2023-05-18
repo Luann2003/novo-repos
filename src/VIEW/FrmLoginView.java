@@ -18,12 +18,15 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
+import java.awt.Color;
+import java.awt.Font;
 
 public class FrmLoginView extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textUsuario;
-	private JTextField textSenha;
+	private JPasswordField textSenha;
 
 	/**
 	 * Launch the application.
@@ -46,29 +49,26 @@ public class FrmLoginView extends JFrame {
 	 */
 	public FrmLoginView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 629, 463);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel nomeUsuario = new JLabel("Nome de Usu\u00E1rio");
-		nomeUsuario.setBounds(10, 11, 424, 14);
+		JLabel nomeUsuario = new JLabel("Usuário");
+		nomeUsuario.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		nomeUsuario.setBounds(248, 125, 106, 21);
 		contentPane.add(nomeUsuario);
 		
 		textUsuario = new JTextField();
-		textUsuario.setBounds(10, 36, 228, 20);
+		textUsuario.setBounds(165, 157, 228, 24);
 		contentPane.add(textUsuario);
 		textUsuario.setColumns(10);
 		
-		JLabel nomeSenha = new JLabel("Senha de Usu\u00E1rio");
-		nomeSenha.setBounds(10, 67, 132, 14);
+		JLabel nomeSenha = new JLabel("Senha");
+		nomeSenha.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		nomeSenha.setBounds(248, 192, 63, 21);
 		contentPane.add(nomeSenha);
-		
-		textSenha = new JTextField();
-		textSenha.setBounds(10, 92, 228, 20);
-		contentPane.add(textSenha);
-		textSenha.setColumns(10);
 		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
@@ -76,8 +76,30 @@ public class FrmLoginView extends JFrame {
 			logar();
 			}
 		});
-		btnLogin.setBounds(10, 128, 89, 23);
+		btnLogin.setBounds(215, 259, 132, 23);
 		contentPane.add(btnLogin);
+		
+		textSenha = new JPasswordField();
+		textSenha.setBounds(165, 224, 228, 24);
+		contentPane.add(textSenha);
+		
+		JButton btnRealizarCadastro = new JButton("Realizar Cadastro");
+		btnRealizarCadastro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FrmCadastroView telacadastro = new FrmCadastroView();
+				telacadastro.setVisible(true);
+				dispose();
+			}
+		});
+		btnRealizarCadastro.setBackground(Color.CYAN);
+		btnRealizarCadastro.setBounds(202, 318, 160, 23);
+		contentPane.add(btnRealizarCadastro);
+		
+		JLabel lblNewLabel = new JLabel("Tela de Login");
+		lblNewLabel.setForeground(Color.RED);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 23));
+		lblNewLabel.setBounds(215, 55, 135, 30);
+		contentPane.add(lblNewLabel);
 	}
 	public void logar() {
 		String nome_usuario, senha_usuario;
