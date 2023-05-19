@@ -103,10 +103,15 @@ public class FrmCadastroView extends JFrame {
 		JLabel lblNewLabel_3 = new JLabel("Tela de Cadastro");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		lblNewLabel_3.setForeground(Color.RED);
-		lblNewLabel_3.setBounds(210, 58, 180, 50);
+		lblNewLabel_3.setBounds(210, 47, 180, 50);
 		contentPane.add(lblNewLabel_3);
 	}
 	public void cadastro() throws SQLException {
+		
+		if(textEmail.getText().matches("") || textusuario.getText().matches("") || textSenha.getText().matches("")) {
+			
+			JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+		}else {
 		
 		String nome, senha, email;
 		
@@ -137,7 +142,7 @@ public class FrmCadastroView extends JFrame {
 		dispose();
 		
 
-		
+		}
 		
 	
 	}

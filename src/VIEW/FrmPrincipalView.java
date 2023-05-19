@@ -7,6 +7,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JToolBar;
+import javax.swing.JTree;
+import javax.swing.JCheckBoxMenuItem;
+import java.awt.Canvas;
+import javax.swing.JTabbedPane;
 
 public class FrmPrincipalView extends JFrame {
 
@@ -43,5 +48,4 @@ public class FrmPrincipalView extends JFrame {
 		lblNewLabel.setBounds(169, 32, 118, 14);
 		contentPane.add(lblNewLabel);
 	}
-
 }
